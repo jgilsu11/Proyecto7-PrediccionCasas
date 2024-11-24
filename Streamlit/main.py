@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # Título y descripción
-st.title("🏠 Predicción de Alquiler de Casas con Machine Learning")
+st.title("🏠 Predicción de Alquiler de Casas")
 st.write("Usa esta aplicación para predecir el precio de alquiler de una casa en Madrid basándote en sus características.")
 
 # Mostrar una imagen llamativa
