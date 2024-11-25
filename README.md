@@ -4,7 +4,7 @@
 ## Entrenamiento del mejor modelo predictivo del precio del alquiler en Madrid
 ![Predicción de Alquileres en Madrid](https://github.com/jgilsu11/Proyecto7-PrediccionCasas/blob/main/Imagen/imagen%20alquiler.webp)  
   
-  
+
 ***Descripción:***
 El proyecto 7 consiste en la especificación e iteración de modelos predictivos hasta obtener un modleo predictivo óptimo para la predicción del alquiler de la vivienda en Madrid haciendo uso de archivos.py y Jupyter notebook.
 
@@ -30,6 +30,7 @@ Por todo lo anterior, el usuario tiene acceso a:
         ├── Imagen/                                      # Imagen para su uso en streamlit       
         ├── Modelos/                                     # Notebooks de Jupyter donde se han ido desarrollando los modelos
         ├── pickle_general/                              # Donde se han guardado los pickles para su uso en streamlit
+        ├── Presentación/                                # Presentación de comparación de modelos        
         ├── src/                                         # Scripts (.py)
         ├── README.md                                    # Descripción del proyecto
         ├── web_final                                    # Script donde desarrollar streamlit (.py)          
