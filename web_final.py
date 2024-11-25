@@ -5,6 +5,11 @@ import numpy as np
 from category_encoders import TargetEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
+import os
+import sys 
+sys.path.append(os.path.abspath("src"))   
+import soporte_transformers as p
+
 
 st.set_page_config(
     page_title="Predicción de Alquiler de Casas",
@@ -25,18 +30,18 @@ st.image(
 
 
 # Cargar los modelos y transformadores entrenados
-def load_models():
-    with open('pickle_general/one_hot_encoder.pkl', 'rb') as f:
-        one_hot = pickle.load(f)    
-    with open('pickle_general/target_encoder.pkl', 'rb') as t:
-        target_encoder = pickle.load(t)
-    with open('pickle_general/scaler.pkl', 'rb') as s:
-        scaler = pickle.load(s)
-    with open('pickle_general/random_forest_model.pkl', 'rb') as r:
-        model = pickle.load(r)
-    return one_hot,target_encoder, scaler, model
+# def load_models():
+#     with open('pickle_general/one_hot_encoder.pkl', 'rb') as f:
+#         one_hot = pickle.load(f)    
+#     with open('pickle_general/target_encoder.pkl', 'rb') as t:
+#         target_encoder = pickle.load(t)
+#     with open('pickle_general/scaler.pkl', 'rb') as s:
+#         scaler = pickle.load(s)
+#     with open('pickle_general/random_forest_model.pkl', 'rb') as r:
+#         model = pickle.load(r)
+#     return one_hot,target_encoder, scaler, model
 
-one_hot,target_encoder, scaler, model = load_models()
+one_hot,target_encoder, scaler, model = p.load_models()
 
 st.header("🔧 Características de la vivienda")
 col1, col2 = st.columns(2)
