@@ -26,14 +26,14 @@ El desarrollo del proyecto se gestionó de la siguiente manera:
 Por todo lo anterior, el usuario tiene acceso a:
 
         ├── datos/                                       # Donde se guardan los csv que se van generando en cada modelo 
-        ├── Entorno/                                     # Entorno con todas las bibliotecas y versiones necesarias 
         ├── Imagen/                                      # Imagen para su uso en streamlit       
         ├── Modelos/                                     # Notebooks de Jupyter donde se han ido desarrollando los modelos
-        ├── pickle_general/                              # Donde se han guardado los pickles para su uso en streamlit
+        ├── transformers/                                # Donde se han guardado los pickles para su uso en streamlit
         ├── Presentación/                                # Presentación de comparación de modelos        
         ├── src/                                         # Scripts (.py)
         ├── README.md                                    # Descripción del proyecto
-        ├── web_final                                    # Script donde desarrollar streamlit (.py)          
+        ├── main                                         # Script donde desarrollar streamlit (.py) 
+        ├── base.yml/                                    # Entorno con todas las bibliotecas y versiones necesarias                  
         
 ***Requisitos e Instalación🛠️:***
 
@@ -46,21 +46,8 @@ Este proyecto usa Python 3.11.9 y bibliotecas que se necesitarán importar al pr
 - [requests](https://requests.readthedocs.io/en/latest/)
 - [sys](https://docs.python.org/3/library/sys.html)
 - [os](https://docs.python.org/3/library/os.html)
-- [sklearn.tree](https://scikit-learn.org/stable/modules/tree.html)
-- [sklearn.linear_model.LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)
-- [sklearn.tree.DecisionTreeRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html)
-- [sklearn.ensemble.RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
-- [sklearn.ensemble.GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)
-- [sklearn.model_selection.train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
-- [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html)
-- [sklearn.metrics.r2_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html)
-- [sklearn.metrics.mean_squared_error](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html)
-- [sklearn.metrics.mean_absolute_error](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_absolute_error.html)
+- [sklearn](https://scikit-learn.org/stable/)
 - [pickle](https://docs.python.org/3/library/pickle.html)
-- [sklearn.model_selection.KFold](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html)
-- [sklearn.model_selection.LeaveOneOut](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LeaveOneOut.html)
-- [sklearn.model_selection.cross_val_score](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html)
-- [sklearn.preprocessing.StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
 - [tqdm](https://tqdm.github.io/)
 - [warnings](https://docs.python.org/3/library/warnings.html)
 - [pandas.options.display](https://pandas.pydata.org/pandas-docs/stable/user_guide/options.html)

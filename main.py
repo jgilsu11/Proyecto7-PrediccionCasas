@@ -5,11 +5,6 @@ import numpy as np
 from category_encoders import TargetEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
-import os
-import sys 
-sys.path.append(os.path.abspath("src"))   
-import soporte_transformers as p
-
 
 st.set_page_config(
     page_title="Predicción de Alquiler de Casas",
@@ -30,18 +25,18 @@ st.image(
 
 
 # Cargar los modelos y transformadores entrenados
-# def load_models():
-#     with open('pickle_general/one_hot_encoder.pkl', 'rb') as f:
-#         one_hot = pickle.load(f)    
-#     with open('pickle_general/target_encoder.pkl', 'rb') as t:
-#         target_encoder = pickle.load(t)
-#     with open('pickle_general/scaler.pkl', 'rb') as s:
-#         scaler = pickle.load(s)
-#     with open('pickle_general/random_forest_model.pkl', 'rb') as r:
-#         model = pickle.load(r)
-#     return one_hot,target_encoder, scaler, model
+def load_models():
+    with open('transformers/one_hot_encoder.pkl', 'rb') as f:
+        one_hot = pickle.load(f)    
+    with open('transformers/target_encoder.pkl', 'rb') as t:
+        target_encoder = pickle.load(t)
+    with open('transformers/scaler.pkl', 'rb') as s:
+        scaler = pickle.load(s)
+    with open('transformers/random_forest_model.pkl', 'rb') as r:
+        model = pickle.load(r)
+    return one_hot,target_encoder, scaler, model
 
-one_hot,target_encoder, scaler, model = p.load_models()
+one_hot,target_encoder, scaler, model = load_models()
 
 st.header("🔧 Características de la vivienda")
 col1, col2 = st.columns(2)
@@ -129,21 +124,30 @@ if st.button("💡 Predecir Precio"):
     new_house = pd.DataFrame({
         'propertyType': [propertyType],
         'size': [size],
-        'exterior': [exterior],
-        'rooms': [rooms],
-        'bathrooms': [bathrooms],
-        'province' : [province],
-        'municipality' : [municipality],
-        'distance': [distance],
-        'status': [status],
-        'floor': [floor],
-        'district': [district],
-        'hasLift': [hasLift],
-        'parkingSpace': [parkingSpace]
+        'exterior': [str(exterior)],
+        'rooms': [str(rooms)],
+        'bathrooms': [str(bathrooms)],
+        'province' : [str(province)],
+        'municipality' : [str(municipality)],
+        'distance': [int(distance)],
+        'status': [str(status)],
+        'floor': [str(floor)],
+        'district': [str(district)],
+        'hasLift': [str(hasLift)],
+        'parkingSpace': [str(parkingSpace)]
     })
-                            
+  
+    new_house=pd.DataFrame(new_house)
+    
+    col_encode = ["propertyType", "exterior", "rooms", "status", "floor", "hasLift", "parkingSpace"]
+    onehot = one_hot.transform(new_house[col_encode])
+    # Obtenemos los nombres de las columnas del codificador
+    column_names = one_hot.get_feature_names_out(col_encode)
+    # Convertimos a un DataFrame
+    onehot_df = pd.DataFrame(onehot.toarray(), columns=column_names)
+    #onehot_df.drop(columns=col_encode,inplace=True)                    
     # Columnas categóricas y numéricas                    #Poner aquí mis columnas concretas
-    categorical_columns = ['propertyType', 'exterior', 'rooms', 'bathrooms', 'status', 'floor', 'hasLift']
+    # categorical_columns = ['propertyType', 'exterior', 'rooms', 'bathrooms', 'status', 'floor', 'hasLift']
     numerical_columns = ['price', 'size', 'bathrooms', 'province', 'municipality', 'distance',
              'district', 'propertyType_chalet', 'propertyType_countryHouse',
              'propertyType_duplex', 'propertyType_flat', 'propertyType_penthouse',
@@ -155,35 +159,38 @@ if st.button("💡 Predecir Precio"):
              'floor_ss', 'floor_st', 'hasLift_False', 'hasLift_True',
              'hasLift_desconocido', 'parkingSpace_False', 'parkingSpace_True',
              'parkingSpace_desconocido']
+   
     
-    # Aplicar el OneHotEncoder, TargetEncoder y StandardScaler
-    diccionario_encoding = {"onehot": ["propertyType", "exterior", "rooms", "status", "floor", "hasLift", "parkingSpace"], 
-                        "dummies": [], # no metemos ninguna
-                        'ordinal' : { }, #no metemos ninguna
-                        "label": [] , # no metemos ninguna columna porque no queremos en ningún caso que se asignen las categorías de forma aleatoria
-                        "frequency": [], # no metemos ninguna columna porque no coincide el orden del value counts con las categorias y la variable respuesta
-                        "target": ["bathrooms", "province", "municipality", "district"]  
-                        }
-    col_encode=diccionario_encoding.get("onehot", [])
-
-
+    # # Aplicar el OneHotEncoder, TargetEncoder y StandardScaler
+    # diccionario_encoding = {"onehot": ["propertyType", "exterior", "rooms", "status", "floor", "hasLift", "parkingSpace"], 
+    #                     "dummies": [], # no metemos ninguna
+    #                     'ordinal' : {}, #no metemos ninguna
+    #                     "label": [] , # no metemos ninguna columna porque no queremos en ningún caso que se asignen las categorías de forma aleatoria
+    #                     "frequency": [], # no metemos ninguna columna porque no coincide el orden del value counts con las categorias y la variable respuesta
+    #                     "target": ["bathrooms", "province", "municipality", "district"]  
+    #                     }
+    # col_encode=diccionario_encoding.get("onehot", [])
+    # st.write(col_encode)
+    
              #Añadir el Onehot
     # Codificación de las columnas categóricas
+    new_house.drop(columns = col_encode,inplace=True)
+    new_house_encoded = pd.concat([new_house, onehot_df], axis=1)
+    #new_house_encoded.drop(columns=col_encode,inplace=True)
+    # new_house_encoded = pd.DataFrame()
+    new_house_encoded["price"] = np.nan
+    new_house_encoded = target_encoder.transform(new_house_encoded)
+    
 
-    new_house_encoded = pd.DataFrame()
-
+    new_house_encoded2=new_house_encoded.copy()
+    new_house_encoded3=new_house_encoded.copy()
     # One-Hot Encoding
-    trans_one_hot = one_hot.transform(new_house[col_encode])
+    # Hacemos el OneHot Encoder
 
-    oh_df = pd.DataFrame(trans_one_hot.toarray(), columns=one_hot.get_feature_names_out())
+    # st.write(onehot_df)
 
     # concatenamos los resultados obtenidos en la transformación con el DataFrame original
-    new_house_encoded = pd.concat([new_house.reset_index(drop=True), oh_df.reset_index(drop=True)], axis=1)
-    lista_eliminar=["propertyType", "exterior", "rooms", "status", "floor", "hasLift", "parkingSpace"]
-    new_house_encoded.drop(columns=lista_eliminar, inplace=True)
-
-
-    new_house_encoded[["bathrooms", "province", "municipality", "district"]] = target_encoder.fit_transform(new_house_encoded[["bathrooms", "province", "municipality", "district"]])
+    #new_house.drop(columns=col_encode,inplace=True)
 
 
 
@@ -194,13 +201,15 @@ if st.button("💡 Predecir Precio"):
     # new_house_encoded = pd.concat([new_house_encoded, encoded_target], axis=1)
 
     # Filtra las columnas numéricas y escala
-    new_house_encoded[numerical_columns] = scaler.transform(new_house_encoded[numerical_columns].select_dtypes(include= np.number))
-
-
-
+    new_house_encoded2.drop(columns="price", inplace=True)
+    new_house_encoded = scaler.transform(new_house_encoded2)
+    new_house_encoded = pd.DataFrame(new_house_encoded)
+    # new_house_encoded.drop(columns=6,inplace=True)
+    new_house_encoded3["price"]=new_house_encoded[6]   #EL DATA FRAME AL PASAR POR EL SCALER NO PUEDE TENER PRICE PERO EN EL MODLEO SI QUE TIENE QUE ESTAR PRICE
+    
     # Realizar la predicción
     prediction = model.predict(new_house_encoded)[0]
-
+    # y_pred=modelo_final.predict(x)
     # Mostrar el resultado
     st.success(f"💵 El precio estimado del alquiler de la casa es: ${prediction}")
     st.balloons()
