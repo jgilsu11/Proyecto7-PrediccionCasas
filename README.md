@@ -66,6 +66,7 @@ Además se dispone del archivo base.yml donde se puede clonar el entorno necesar
 **Notas**:  
 - *El Modelo 5 es una extensión del Modelo 3, entrenado con todos los datos y exportado con los pickles.  
 - Las métricas del Modelo 4 no se incluyen debido a su pésimo desempeño.  
+- Recordar que la base de datos cuenta únicamente con 400 filas por ello las métricas pueden ser más débiles  
 
 ***Aportación al Usuario🤝:***
 
