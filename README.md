@@ -51,7 +51,21 @@ Este proyecto usa Python 3.11.9 y bibliotecas que se necesitarán importar al pr
 - [tqdm](https://tqdm.github.io/)
 - [warnings](https://docs.python.org/3/library/warnings.html)
 - [pandas.options.display](https://pandas.pydata.org/pandas-docs/stable/user_guide/options.html)
+  
+Además se dispone del archivo base.yml donde se puede clonar el entorno necesario para el funcionamiento del proyecto.     
+***Tabla Resumen***  
+  
+| **Modelo**    | **Algoritmo**       | **R² (Train)** | **RMSE (Train)** | **R² (Test)** | **RMSE (Test)** | **Descripción**                                    |
+|---------------|---------------------|----------------|------------------|---------------|-----------------|---------------------------------------------------|
+| **Modelo 5*** | Random Forest       | 0.77           | 0.10             | -             | -               | Mejor modelo, entrenado con todos los datos y pickles. |
+| **Modelo 3**  | Random Forest       | 0.75           | 41.90            | 0.76          | 40.12           | Buen desempeño en ambos conjuntos (train y test). |
+| **Modelo 1**  | Random Forest       | 0.74           | 40.93            | 0.69          | 42.54           | Desempeño aceptable, pero menor al Modelo 3.     |
+| **Modelo 2**  | Random Forest       | 0.41           | 39.29            | 0.33          | 42.50           | Desempeño significativamente más bajo.           |
+| **Modelo 4**  | Regresión Lineal    | -              | -                | -             | -               | Peor modelo.                                      |
 
+**Notas**:  
+- *El Modelo 5 es una extensión del Modelo 3, entrenado con todos los datos y exportado con los pickles.  
+- Las métricas del Modelo 4 no se incluyen debido a su pésimo desempeño.  
 
 ***Aportación al Usuario🤝:***
 
