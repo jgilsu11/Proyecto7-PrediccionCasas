@@ -498,4 +498,6 @@ dependencies:
   - zope.interface=5.4.0=py312h2bbff1b_0
   - zstandard=0.22.0=py312h3469f8a_0
   - zstd=1.5.5=hd43e919_2
+  - pip:
+      - category-encoders==2.6.3
 prefix: C:\Users\jaime\anaconda3
